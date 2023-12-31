@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "sabt-website": {
+      "hosting": {
+        "sabt-website": [
+          "sabt-website"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "sabt-website"
+  }
+}

@@ -94,6 +94,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "sabt-website:build:production",
+              "serveTarget": "sabt-website:serve:production"
+            },
+            "development": {
+              "buildTarget": "sabt-website:build:development",
+              "serveTarget": "sabt-website:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
