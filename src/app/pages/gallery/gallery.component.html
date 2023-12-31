@@ -1,0 +1,8 @@
+<h1>Gallery</h1>
+<div class="row gallery-row">
+  <div class="col-lg-3" *ngFor="let post of data;">
+    <img [src]="post.imageURL" [alt]="post.description" class="gallery-img">
+    <p>by <strong>{{post.creator}}</strong></p>
+    <p>{{post.description}}</p>
+  </div>
+</div>

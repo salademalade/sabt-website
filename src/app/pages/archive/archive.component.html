@@ -1,0 +1,10 @@
+<h1>Archive</h1>
+<div class="row ch-row" *ngFor="let ch of data;">
+  <h2>{{ch.title}}</h2>
+  <div class="col-lg-2" *ngFor="let pg of ch.chapters;">
+    <a [href]="'/comics/'.concat(pg.number.toString())">
+      <h3>{{pg.title}}</h3>
+      <img [src]="pg.imageURL" [alt]="pg.title" class="grid-image">
+    </a>
+  </div>
+</div>

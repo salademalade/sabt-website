@@ -1,0 +1,44 @@
+.comic-container {
+  max-width: 900px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin: 10px 0 10px 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+
+  .comic-bar-top {
+    border-radius: 15px 15px 0 0;
+  }
+
+  .comic-bar-bottom {
+    border-radius: 0 0 15px 15px;
+  }
+
+  .comic-bar {
+    background-color: #333333;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+
+    .comic-bar-item {
+      text-align: center;
+      font-size: 30pt;
+
+      fa-icon {
+        color: #ffffff;
+
+        &.disabled {
+          color: #777777;
+        }
+      }
+
+      @media screen and (max-width: 250px) {
+        font-size: 15pt;
+      }
+    }
+  }
+
+  .comic-img {
+    width: 100%;
+  }
+}

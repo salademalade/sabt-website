@@ -1,0 +1,126 @@
+<div *ngIf="pageExists; then thenBlock; else elseBlock"></div>
+<ng-template #thenBlock>
+  <div class="comic-container">
+    <div class="comic-bar comic-bar-top">
+      <div *ngIf="number == 1; then leftThenBlock; else leftElseBlock"></div>
+      <ng-template #leftThenBlock>
+        <a>
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleDoubleLeft"  class="disabled"></fa-icon>
+          </div>
+        </a>
+        <a>
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleLeft" class="disabled"></fa-icon>
+          </div>
+        </a>
+      </ng-template>
+      <ng-template #leftElseBlock>
+        <a href="/comics/1">
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleDoubleLeft"></fa-icon>
+          </div>
+        </a>
+        <a [href]="'/comics/'.concat((number - 1).toString())">
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleLeft"></fa-icon>
+          </div>
+        </a>
+      </ng-template>
+      <a href="/comics">
+        <div class="comic-bar-item">
+          <fa-icon [icon]="faSquare"></fa-icon>
+        </div>
+      </a>
+      <div *ngIf="number == lastNo; then rightThenBlock; else rightElseBlock"></div>
+      <ng-template #rightThenBlock>
+        <a>
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleRight"  class="disabled"></fa-icon>
+          </div>
+        </a>
+        <a>
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleDoubleRight"  class="disabled"></fa-icon>
+          </div>
+        </a>
+      </ng-template>
+      <ng-template #rightElseBlock>
+        <a [href]="'/comics/'.concat((number + 1).toString())">
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleRight"></fa-icon>
+          </div>
+        </a>
+        <a href="/comics/latest">
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleDoubleRight"></fa-icon>
+          </div>
+        </a>
+      </ng-template>
+    </div>
+    <img class="comic-img" [src]="imageURL" alt="Comic page">
+    <div class="comic-bar comic-bar-bottom">
+      <div *ngIf="number == 1; then leftThenBlock; else leftElseBlock"></div>
+      <ng-template #leftThenBlock>
+        <a>
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleDoubleLeft"  class="disabled"></fa-icon>
+          </div>
+        </a>
+        <a>
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleLeft" class="disabled"></fa-icon>
+          </div>
+        </a>
+      </ng-template>
+      <ng-template #leftElseBlock>
+        <a href="/comics/1">
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleDoubleLeft"></fa-icon>
+          </div>
+        </a>
+        <a [href]="'/comics/'.concat((number - 1).toString())">
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleLeft"></fa-icon>
+          </div>
+        </a>
+      </ng-template>
+      <a href="/comics">
+        <div class="comic-bar-item">
+          <fa-icon [icon]="faSquare"></fa-icon>
+        </div>
+      </a>
+      <div *ngIf="number == lastNo; then rightThenBlock; else rightElseBlock"></div>
+      <ng-template #rightThenBlock>
+        <a>
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleRight"  class="disabled"></fa-icon>
+          </div>
+        </a>
+        <a>
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleDoubleRight"  class="disabled"></fa-icon>
+          </div>
+        </a>
+      </ng-template>
+      <ng-template #rightElseBlock>
+        <a [href]="'/comics/'.concat((number + 1).toString())">
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleRight"></fa-icon>
+          </div>
+        </a>
+        <a href="/comics/latest">
+          <div class="comic-bar-item">
+            <fa-icon [icon]="faAngleDoubleRight"></fa-icon>
+          </div>
+        </a>
+      </ng-template>
+    </div>
+  </div>
+  <h2>{{title}}</h2>
+  <p>{{createdDate}}</p>
+  <p>{{description}}</p>
+</ng-template>
+<ng-template #elseBlock>
+  <app-notfound *ngIf="displayNotFound"></app-notfound>
+</ng-template>
