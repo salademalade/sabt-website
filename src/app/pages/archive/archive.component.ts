@@ -29,10 +29,10 @@ export class ArchiveComponent {
     if (ch == null) this.chapter = 1;
     else this.chapter = parseInt(ch);
 
-    this.count = (await getCountFromServer(collection(this.firestore, 'chapters'))).data().count;
+    this.count = (await getCountFromServer(query(collection(this.firestore, 'chapters'), where('createdAt', '<=', Timestamp.now())))).data().count;
     this.chapters = Array(this.count).fill(0).map((x, i) => i + 1);
 
-    const chSnap = await getDocs(query(collection(this.firestore, 'chapters'), where('number', '==', this.chapter), limit(1)));
+    const chSnap = await getDocs(query(collection(this.firestore, 'chapters'), where('createdAt', '<=', Timestamp.now()), where('number', '==', this.chapter), limit(1)));
 
     if (chSnap.docs.length < 1) return;
 
