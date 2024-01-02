@@ -20,6 +20,10 @@
     display: grid;
     grid-template-columns: auto auto auto auto auto;
 
+    a.disabled {
+      pointer-events: none;
+    }
+
     .comic-bar-item {
       text-align: center;
       font-size: 30pt;
