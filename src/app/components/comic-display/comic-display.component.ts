@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAngleDoubleLeft, faAngleDoubleRight, faAngleLeft, faAngleRight, faSquare } from '@fortawesome/free-solid-svg-icons';
 import { NotfoundComponent } from '../notfound/notfound.component';
+import { Storage, getDownloadURL, ref } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-comic-display',
@@ -18,6 +19,7 @@ export class ComicDisplayComponent {
   @Input() displayNotFound: boolean = false;
 
   firestore: Firestore = inject(Firestore);
+  storage: Storage = inject(Storage);
 
   title: string = '';
   number: number = 0;
@@ -42,35 +44,30 @@ export class ComicDisplayComponent {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.pageNo !== 'latest' && this.pageNo as number < 1) return;
 
-    getDocs(query(collectionGroup(this.firestore, 'pages'), where('createdAt', '<=', Timestamp.now()), orderBy('createdAt', 'desc'), orderBy('number', 'desc'), limit(1))).then((snap) => {
-      snap.forEach((docSnap) => {
-        this.lastNo = docSnap.data()['number'];
-        if (this.pageNo === 'latest') {
-          this.pageExists = true;
+    const latestSnap = await getDocs(query(collectionGroup(this.firestore, 'pages'), where('createdAt', '<=', Timestamp.now()), orderBy('createdAt', 'desc'), orderBy('number', 'desc'), limit(1)));
 
-          this.title = docSnap.data()['titleLong'];
-          this.number = docSnap.data()['number'];
-          this.imageURL = docSnap.data()['imageURL'];
-          this.description = docSnap.data()['description'];
-          this.createdAt = docSnap.data()['createdAt'];
-        } else {
-          getDocs(query(collectionGroup(this.firestore, 'pages'), where('createdAt', '<=', Timestamp.now()), where('number', '==', this.pageNo))).then((snap) => {
-            if (snap.docs.length == 0) return;
+    this.lastNo = latestSnap.docs[0].data()['number'];
+    if (this.pageNo === 'latest') {
+      this.pageExists = true;
+      this.title = latestSnap.docs[0].data()['titleLong'];
+      this.number = latestSnap.docs[0].data()['number'];
+      this.description = latestSnap.docs[0].data()['description'];
+      this.createdAt = latestSnap.docs[0].data()['createdAt'];
+      this.imageURL = await getDownloadURL(ref(this.storage, latestSnap.docs[0].data()['imagePath']));
+    } else {
+      const snap = await getDocs(query(collectionGroup(this.firestore, 'pages'), where('createdAt', '<=', Timestamp.now()), where('number', '==', this.pageNo)));
 
-            this.pageExists = true;
-            snap.forEach((docSnap) => {
-              this.title = docSnap.data()['titleLong'];
-              this.number = docSnap.data()['number'];
-              this.imageURL = docSnap.data()['imageURL'];
-              this.description = docSnap.data()['description'];
-              this.createdAt = docSnap.data()['createdAt'];
-            });
-          });
-        }
-      });
-    });
+      if (snap.docs.length == 0) return;
+
+      this.pageExists = true;
+      this.title = snap.docs[0].data()['titleLong'];
+      this.number = snap.docs[0].data()['number'];
+      this.description = snap.docs[0].data()['description'];
+      this.createdAt = snap.docs[0].data()['createdAt'];
+      this.imageURL = await getDownloadURL(ref(this.storage, snap.docs[0].data()['imagePath']));
+    }
   }
 }

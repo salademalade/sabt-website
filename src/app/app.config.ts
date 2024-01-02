@@ -4,7 +4,8 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { ReCaptchaV3Provider, initializeAppCheck, provideAppCheck, ReCaptchaEnterpriseProvider } from '@angular/fire/app-check';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { ReCaptchaV3Provider, initializeAppCheck, provideAppCheck } from '@angular/fire/app-check';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,7 @@ export const appConfig: ApplicationConfig = {
       'messagingSenderId': '860552880241',
     }))),
     importProvidersFrom(provideFirestore(() => getFirestore())),
+    importProvidersFrom(provideStorage(() => getStorage())),
     importProvidersFrom(provideAppCheck(() => {
       const provider = new ReCaptchaV3Provider('6LfKX0EpAAAAAEe5WIEsfNxcSc3-kqKKoFl26bjS');
       return initializeAppCheck(undefined, { provider, isTokenAutoRefreshEnabled: true });
