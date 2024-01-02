@@ -1,10 +1,36 @@
 <h1>Archive</h1>
-<div class="row ch-row" *ngFor="let ch of data;">
-  <h2>{{ch.title}}</h2>
-  <div class="col-lg-2" *ngFor="let pg of ch.chapters;">
+<nav>
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="{'disabled': chapter == 1}">
+      <a [href]="'/comic/archive?ch='.concat((chapter - 1).toString())" class="page-link">Previous</a>
+    </li>
+    <li *ngFor="let ch of chapters;" class="page-item" [ngClass]="{'active': ch == chapter}">
+      <a [href]="'/comic/archive?ch='.concat(ch.toString())" class="page-link">{{ch.toString()}}</a>
+    </li>
+    <li class="page-item" [ngClass]="{'disabled': chapter == count}">
+      <a [href]="'/comic/archive?ch='.concat((chapter + 1).toString())" class="page-link">Next</a>
+    </li>
+  </ul>
+</nav>
+<h2>{{title}}</h2>
+<div class="row ch-row">
+  <div class="col-sm-2 ch-col" *ngFor="let pg of data;">
     <a [href]="'/comic/'.concat(pg.number.toString())">
       <h3>{{pg.title}}</h3>
       <img [src]="pg.imageURL" [alt]="pg.title" class="grid-image">
     </a>
   </div>
 </div>
+<nav>
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="{'disabled': chapter == 1}">
+      <a [href]="'/comic/archive?ch='.concat((chapter - 1).toString())" class="page-link">Previous</a>
+    </li>
+    <li *ngFor="let ch of chapters;" class="page-item" [ngClass]="{'active': ch == chapter}">
+      <a [href]="'/comic/archive?ch='.concat(ch.toString())" class="page-link">{{ch.toString()}}</a>
+    </li>
+    <li class="page-item" [ngClass]="{'disabled': chapter == count}">
+      <a [href]="'/comic/archive?ch='.concat((chapter + 1).toString())" class="page-link">Next</a>
+    </li>
+  </ul>
+</nav>
