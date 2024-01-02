@@ -15,12 +15,17 @@ export const routes: Routes = [
     title: 'Sniff and Bark Tales',
   },
   {
-    path: 'comics',
+    path: 'comic',
+    component: ComicPageComponent,
+    title: 'Sniff and Bark Tales | Comic',
+  },
+  {
+    path: 'comic/archive',
     component: ArchiveComponent,
     title: 'Sniff and Bark Tales | Archive',
   },
   {
-    path: 'comics/:id',
+    path: 'comic/:id',
     component: ComicPageComponent,
     title: 'Sniff and Bark Tales | Comic',
   },

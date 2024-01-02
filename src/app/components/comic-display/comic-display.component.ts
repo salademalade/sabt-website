@@ -15,7 +15,7 @@ import { Storage, getDownloadURL, ref } from '@angular/fire/storage';
   styleUrl: './comic-display.component.scss'
 })
 export class ComicDisplayComponent {
-  @Input() pageNo: number | string = 0;
+  @Input() pageNo: number = 0;
   @Input() displayNotFound: boolean = false;
 
   firestore: Firestore = inject(Firestore);
@@ -45,12 +45,10 @@ export class ComicDisplayComponent {
   }
 
   async ngOnInit() {
-    if (this.pageNo !== 'latest' && this.pageNo as number < 1) return;
-
     const latestSnap = await getDocs(query(collectionGroup(this.firestore, 'pages'), where('createdAt', '<=', Timestamp.now()), orderBy('createdAt', 'desc'), orderBy('number', 'desc'), limit(1)));
 
     this.lastNo = latestSnap.docs[0].data()['number'];
-    if (this.pageNo === 'latest') {
+    if (this.pageNo == 0) {
       this.pageExists = true;
       this.title = latestSnap.docs[0].data()['titleLong'];
       this.number = latestSnap.docs[0].data()['number'];

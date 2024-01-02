@@ -12,9 +12,9 @@ import { ComicDisplayComponent } from '../../components/comic-display/comic-disp
 export class ComicPageComponent {
   activatedRoute: ActivatedRoute = inject(ActivatedRoute);
 
-  get pageNo() {
-    const param = this.activatedRoute.snapshot.paramMap.get('id');
-    if (param === 'latest') return 'latest';
-    return parseInt(param as string);
+  get pageNo(): number {
+    const param = this.activatedRoute.snapshot.paramMap.get('id') || 0;
+    if (param === 0) return 0;
+    return parseInt(param);
   }
 }
