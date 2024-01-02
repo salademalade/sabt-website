@@ -5,6 +5,7 @@ import { Firestore, connectFirestoreEmulator } from '@angular/fire/firestore';
 import { HeaderComponent } from './layout/header/header.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { Storage, connectStorageEmulator } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +18,12 @@ export class AppComponent {
   title = 'sabt-website';
 
   firestore: Firestore = inject(Firestore);
+  storage: Storage = inject(Storage);
 
   ngOnInit() {
     if (isDevMode()) {
       connectFirestoreEmulator(this.firestore, 'localhost', 8080);
+      connectStorageEmulator(this.storage, 'localhost', 9199);
     }
   }
 }

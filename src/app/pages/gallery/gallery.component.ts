@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Firestore, collection, getDocs, limit, orderBy, query } from '@angular/fire/firestore';
+import { Storage, getDownloadURL, ref } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-gallery',
@@ -11,17 +12,19 @@ import { Firestore, collection, getDocs, limit, orderBy, query } from '@angular/
 })
 export class GalleryComponent {
   firestore: Firestore = inject(Firestore);
-  data: { creator: string, description: string, imageURL: string }[] = [];
+  storage: Storage = inject(Storage);
 
-  ngOnInit() {
-    getDocs(query(collection(this.firestore, 'gallery'), orderBy('createdAt', 'desc'), limit(50))).then((snap) => {
-      snap.forEach((docSnap) => {
-        const creator = docSnap.data()['creator'];
-        const description = docSnap.data()['description'];
-        const imageURL = docSnap.data()['imageURL'];
+  data: any[] = [];
 
-        this.data.push({ creator, description, imageURL });
+  async ngOnInit() {
+    const snap = await getDocs(query(collection(this.firestore, 'gallery'), orderBy('createdAt', 'desc'), limit(20)));
+
+    for (let doc of snap.docs) {
+      this.data.push({
+        creator: doc.get('creator'),
+        description: doc.get('description'),
+        imageURL: await getDownloadURL(ref(this.storage, doc.get('imagePath'))),
       });
-    });
+    }
   }
 }
