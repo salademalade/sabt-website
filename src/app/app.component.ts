@@ -1,6 +1,7 @@
 import { Component, inject, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { Meta } from '@angular/platform-browser';
 import { Firestore, connectFirestoreEmulator } from '@angular/fire/firestore';
 import { HeaderComponent } from './layout/header/header.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
@@ -19,6 +20,7 @@ export class AppComponent {
 
   firestore: Firestore = inject(Firestore);
   storage: Storage = inject(Storage);
+  meta: Meta = inject(Meta);
 
   ngOnInit() {
     if (isDevMode()) {
