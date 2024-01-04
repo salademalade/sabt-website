@@ -27,7 +27,6 @@ export const routes: Routes = [
   {
     path: 'comic/:id',
     component: ComicPageComponent,
-    title: 'Sniff and Bark Tales | Comic',
   },
   {
     path: 'characters',
