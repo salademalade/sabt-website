@@ -5,6 +5,10 @@
       "public": "dist/sabt-website/browser",
       "rewrites": [
         {
+          "source": "/rss",
+          "function": "genRSS"
+        },
+        {
           "source": "**",
           "destination": "/index.html"
         },
