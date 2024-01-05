@@ -2,8 +2,21 @@
   "hosting": [
     {
       "target": "sabt-website",
-      "source": ".",
-      "frameworksBackend": {}
+      "public": "dist/sabt-website/browser",
+      "rewrites": [
+        {
+          "source": "/rss",
+          "function": "genRSS"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        },
+        {
+          "source": "!**/.@(js|css|ico|png)",
+          "destination": "/index.html"
+        }
+      ]
     }
   ],
   "firestore": {
@@ -27,5 +40,20 @@
       "port": 9199
     },
     "singleProjectMode": true
-  }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ]
 }
