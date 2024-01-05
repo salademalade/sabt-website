@@ -2,8 +2,17 @@
   "hosting": [
     {
       "target": "sabt-website",
-      "source": ".",
-      "frameworksBackend": {}
+      "public": "dist/sabt-website/browser",
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        },
+        {
+          "source": "!**/.@(js|css|ico|png)",
+          "destination": "/index.html"
+        }
+      ]
     }
   ],
   "firestore": {
