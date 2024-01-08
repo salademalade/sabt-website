@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAngleDoubleLeft, faAngleDoubleRight, faAngleLeft, faAngleRight, faSquare } from '@fortawesome/free-solid-svg-icons';
 import { NotfoundComponent } from '../notfound/notfound.component';
 import { Storage, getDownloadURL, ref } from '@angular/fire/storage';
+import { marked } from 'marked';
 
 @Component({
   selector: 'app-comic-display',
@@ -55,7 +56,7 @@ export class ComicDisplayComponent {
       this.pageExists = true;
       this.title = latestSnap.docs[0].get('titleLong');
       this.number = latestSnap.docs[0].get('number');
-      this.description = latestSnap.docs[0].get('description');
+      this.description = await marked.parse(latestSnap.docs[0].get('description'));
       this.createdAt = latestSnap.docs[0].get('createdAt');
       this.imageURL = await getDownloadURL(ref(this.storage, latestSnap.docs[0].get('imagePath')));
     } else {
@@ -66,7 +67,7 @@ export class ComicDisplayComponent {
       this.pageExists = true;
       this.title = snap.docs[0].get('titleLong');
       this.number = snap.docs[0].get('number');
-      this.description = snap.docs[0].get('description');
+      this.description = await marked.parse(snap.docs[0].get('description'));
       this.createdAt = snap.docs[0].get('createdAt');
       this.imageURL = await getDownloadURL(ref(this.storage, snap.docs[0].get('imagePath')));
     }
